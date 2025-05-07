@@ -1,18 +1,21 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 const PORT = 3000;
 const noteRouter = require("./routers/note.router");
+const dbUrl = process.env.DATABASE_URL;
 
 app.use(cors());
 app.use(express.json());
 
 // konek mongoDB
 mongoose
-  .connect(
-    "mongodb+srv://nicky:inipassword@cluster-coba.dxkvtqg.mongodb.net/coba?retryWrites=true&w=majority&appName=cluster-coba"
-  )
+  .connect(dbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log("Connected!");
   })
